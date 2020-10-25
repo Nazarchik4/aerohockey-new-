@@ -1,5 +1,18 @@
 from tkinter import *
 window = Tk()
+def roll():
+    global ball_x
+    global ball_y
+    global dx
+    global dy
+    ball_x = ball_x + dx
+    ball_y = ball_y + dy
+    if ball_x > 950 or ball_x < 0:
+       dx= - dx
+    if ball_y > 450 or ball_y < 0:
+        dy = - dy
+    canvas.coords(ball, ball_x, ball_y, ball_x + 50, ball_y + 50)
+    window.after(40, roll)
 canvas = Canvas(window, width=1000, height=550, bg="black")
 canvas.pack()
 
@@ -11,4 +24,11 @@ vertical_up_left_line = canvas.create_rectangle(950,30,960,200, fill = "white")
 vertical_down_right_line = canvas.create_rectangle(950,520,960,350, fill = "white")
 middle_line = canvas.create_rectangle(500,30,490,520, fill = "white")
 
+dx = 10
+dy = 10
+ball_x = 500
+ball_y = 250
+
+ball = canvas.create_oval(ball_x,ball_y,ball_x+30,ball_y+30, fill = "blue")
+window.after(0, roll)
 window.mainloop()
